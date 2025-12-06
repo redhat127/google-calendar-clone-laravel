@@ -9,7 +9,23 @@
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
-        "types": "tsc --noEmit"
+        "types": "tsc --noEmit",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "**/*.php": [
+            "./vendor/bin/pint"
+        ],
+        "resources/**/*.{css,scss,json,md}": [
+            "prettier --write"
+        ],
+        "resources/**/*.{js,jsx,ts,tsx,vue}": [
+            "prettier --write",
+            "eslint --fix --max-warnings 0 --no-ignore"
+        ],
+        "resources/**/*.{ts,tsx}": [
+            "bash -c 'tsc --noEmit'"
+        ]
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
@@ -19,6 +35,8 @@
         "eslint-config-prettier": "^10.0.1",
         "eslint-plugin-react": "^7.37.3",
         "eslint-plugin-react-hooks": "^5.1.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.2.7",
         "prettier": "^3.4.2",
         "prettier-plugin-organize-imports": "^4.1.0",
         "prettier-plugin-tailwindcss": "^0.6.11",
