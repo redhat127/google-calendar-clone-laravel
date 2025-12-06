@@ -21,3 +21,16 @@ export const setServerValidationErrors = <TFieldValues extends FieldValues = Fie
     }
   });
 };
+
+export const minutesToHuman = (minutes: number) => {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  const parts = [];
+  if (hours > 0) {
+    parts.push(`${hours} ${hours === 1 ? 'hour' : 'hours'}`);
+  }
+  if (mins > 0) {
+    parts.push(`${mins} ${mins === 1 ? 'minute' : 'minutes'}`);
+  }
+  return parts.length ? parts.join(' and ') : '0 minutes';
+};

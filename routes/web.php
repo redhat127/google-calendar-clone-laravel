@@ -47,5 +47,6 @@ Route::middleware('auth')
                 Route::get('/', 'index')->name('index');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/create', 'store')->name('store');
+                Route::get('/{event}', 'show')->name('show');
             });
     });
