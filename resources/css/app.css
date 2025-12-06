@@ -126,3 +126,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+#app {
+  @apply h-full;
+}
