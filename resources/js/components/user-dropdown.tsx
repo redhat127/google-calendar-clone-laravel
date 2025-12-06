@@ -1,5 +1,6 @@
 import { home } from '@/routes';
 import account from '@/routes/account';
+import event from '@/routes/event';
 import type { User as IUser } from '@/types';
 import { Link } from '@inertiajs/react';
 import { Calendar, Clock, User } from 'lucide-react';
@@ -42,7 +43,7 @@ export const UserDropdown = ({ user: { name, avatar, email } }: { user: IUser })
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="p-0 sm:hidden">
-          <Link href={home()} className="flex w-full items-center gap-1.5 px-2 py-1.5" onClick={closeDropdown}>
+          <Link href={event.index()} className="flex w-full items-center gap-1.5 px-2 py-1.5" onClick={closeDropdown}>
             <Calendar />
             Events
           </Link>

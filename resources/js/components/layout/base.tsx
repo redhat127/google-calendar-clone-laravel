@@ -1,6 +1,7 @@
 import { useAuth } from '@/hooks/use-auth';
 import { useFlashMessage } from '@/hooks/use-flash-message';
 import { home } from '@/routes';
+import event from '@/routes/event';
 import login from '@/routes/login';
 import { Link } from '@inertiajs/react';
 import { Calendar, Clock } from 'lucide-react';
@@ -27,7 +28,7 @@ export const BaseLayout = ({ children }: { children: ReactNode }) => {
             <span className="hidden text-sm font-bold xs:block sm:text-2xl">Google Calendar</span>
           </Link>
           <div className="hidden items-center gap-4 sm:flex">
-            <Link href={home()} className="flex items-center gap-1.5">
+            <Link href={event.index()} className="flex items-center gap-1.5">
               <Calendar className="size-5" />
               Events
             </Link>
