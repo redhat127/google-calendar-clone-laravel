@@ -14,7 +14,10 @@ export const EventList = ({ events }: { events: Event[] }) => {
         <Card key={event.id} className="gap-4 py-4">
           <CardHeader className="gap-1">
             <CardTitle>
-              <h2 className="leading-5 capitalize">{event.name}</h2>
+              <h2 className="leading-5 capitalize">
+                <span>{event.name}</span>
+                {!event.is_active && <span className="text-red-600"> (unavailable)</span>}
+              </h2>
             </CardTitle>
             <CardDescription className="flex items-start gap-1">
               <Clock className="mt-0.5 size-4" />
@@ -34,7 +37,7 @@ export const EventList = ({ events }: { events: Event[] }) => {
             <Button asChild className="w-full sm:w-auto">
               <Link href={eventRoute.index()}>Edit</Link>
             </Button>
-            <CopyEvent eventId={event.id} userId={event.user_id} />
+            {event.is_active && <CopyEvent eventId={event.id} userId={event.user_id} />}
           </CardFooter>
         </Card>
       ))}
