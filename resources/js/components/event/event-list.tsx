@@ -34,7 +34,7 @@ export const EventList = ({ events }: { events: Event[] }) => {
             <Button asChild className="w-full sm:w-auto">
               <Link href={eventRoute.index()}>Edit</Link>
             </Button>
-            <CopyEvent eventId={event.id} />
+            <CopyEvent eventId={event.id} userId={event.user_id} />
           </CardFooter>
         </Card>
       ))}

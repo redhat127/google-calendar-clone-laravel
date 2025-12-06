@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -47,6 +48,12 @@ Route::middleware('auth')
                 Route::get('/', 'index')->name('index');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/create', 'store')->name('store');
-                Route::get('/{event}', 'show')->name('show');
+            });
+
+        Route::prefix('book')
+            ->name('book.')
+            ->controller(BookController::class)
+            ->group(function () {
+                Route::get('/{userId}/{eventId}', 'index')->name('index');
             });
     });

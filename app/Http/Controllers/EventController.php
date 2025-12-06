@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -60,6 +59,4 @@ class EventController extends Controller
                     ->limit(preserveWords: true).'" has been created.',
             ]);
     }
-
-    public function show(Event $event) {}
 }
