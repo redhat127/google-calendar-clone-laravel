@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,5 +18,15 @@ Route::middleware('guest')
                 Route::post('/', 'post')->name('post');
                 Route::get('/{provider}/redirect', 'providerRedirect')->name('provider.redirect');
                 Route::get('/{provider}/callback', 'providerCallback')->name('provider.callback');
+            });
+    });
+
+Route::middleware('auth')
+    ->group(function () {
+        Route::prefix('logout')
+            ->name('logout.')
+            ->controller(LogoutController::class)
+            ->group(function () {
+                Route::post('/', 'post')->name('post');
             });
     });

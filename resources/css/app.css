@@ -128,5 +128,5 @@
 }
 
 #app {
-  @apply h-full;
+  @apply flex h-full flex-col;
 }
