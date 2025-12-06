@@ -1,8 +1,9 @@
+import { home } from '@/routes';
 import account from '@/routes/account';
 import type { User as IUser } from '@/types';
 import { Link } from '@inertiajs/react';
-import { User } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { Calendar, Clock, User } from 'lucide-react';
+import { useCallback, useMemo, useState } from 'react';
 import { LogoutForm } from './form/logout-form';
 import {
   DropdownMenu,
@@ -19,6 +20,7 @@ export const UserDropdown = ({ user: { name, avatar, email } }: { user: IUser })
     return <UserAvatar avatar={avatar} name={name} />;
   }, [avatar, name]);
   const [open, setOpen] = useState(false);
+  const closeDropdown = useCallback(() => setOpen(false), []);
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger>
@@ -34,15 +36,21 @@ export const UserDropdown = ({ user: { name, avatar, email } }: { user: IUser })
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="p-0">
-          <Link
-            href={account.index()}
-            className="flex w-full items-center gap-1.5 px-2 py-1.5"
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
+          <Link href={account.index()} className="flex w-full items-center gap-1.5 px-2 py-1.5" onClick={closeDropdown}>
             <User />
             Account
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="p-0 sm:hidden">
+          <Link href={home()} className="flex w-full items-center gap-1.5 px-2 py-1.5" onClick={closeDropdown}>
+            <Calendar />
+            Events
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="p-0 sm:hidden">
+          <Link href={home()} className="flex w-full items-center gap-1.5 px-2 py-1.5" onClick={closeDropdown}>
+            <Clock />
+            Schedule
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="p-0">
