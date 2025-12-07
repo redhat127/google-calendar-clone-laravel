@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -18,7 +19,7 @@ class EventController extends Controller
         return inertia('event/create');
     }
 
-    public function store()
+    private function validate()
     {
         $validated = request()->validate([
             'name' => [
@@ -50,6 +51,13 @@ class EventController extends Controller
             ])
             ->toArray();
 
+        return $validated;
+    }
+
+    public function store()
+    {
+        $validated = $this->validate();
+
         Auth::user()->events()->create($validated);
 
         return redirect()->route('event.index')
@@ -57,6 +65,39 @@ class EventController extends Controller
                 'type' => 'success',
                 'text' => 'Event "'.str($validated['name'])
                     ->limit(preserveWords: true).'" has been created.',
+            ]);
+    }
+
+    private function findEvent(string $eventId)
+    {
+        $event = Event::where('id', $eventId)
+            ->where('user_id', Auth::id())
+            ->firstOrFail()
+            ->toResource();
+
+        return $event;
+    }
+
+    public function edit(string $eventId)
+    {
+        $event = $this->findEvent($eventId);
+
+        return inertia('event/edit', compact('event'));
+    }
+
+    public function update(string $eventId)
+    {
+        $event = $this->findEvent($eventId);
+
+        $validated = $this->validate();
+
+        $event->update($validated);
+
+        return redirect()->route('event.index')
+            ->with('flashMessage', [
+                'type' => 'success',
+                'text' => 'Event "'.str($validated['name'])
+                    ->limit(preserveWords: true).'" has been updated.',
             ]);
     }
 }

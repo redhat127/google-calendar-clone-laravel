@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { LoadingSwap } from '@/components/ui/loading-swap';
 import { Textarea } from '@/components/ui/textarea';
 import { setServerValidationErrors } from '@/lib/utils';
+import type { Event } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
@@ -30,14 +31,14 @@ const profileDetailsSchema = z.object({
   isActive: z.boolean(),
 });
 
-export const CreateEventForm = () => {
+export const CreateEditEventForm = ({ event }: { event?: Event }) => {
   const form = useForm<z.infer<typeof profileDetailsSchema>>({
     resolver: zodResolver(profileDetailsSchema),
     defaultValues: {
-      name: '',
-      description: '',
-      durationInMinutes: 30,
-      isActive: true,
+      name: event?.name ?? '',
+      description: event?.description ?? '',
+      durationInMinutes: event?.duration_in_minutes ?? 30,
+      isActive: event?.is_active ?? true,
     },
   });
   const {
@@ -53,7 +54,7 @@ export const CreateEventForm = () => {
       noValidate
       className="max-w-lg"
       onSubmit={handleSubmit((data) => {
-        router.post(EventController.create(), data, {
+        router[event ? 'patch' : 'post'](event ? EventController.edit({ eventId: event.id }) : EventController.create(), data, {
           onBefore() {
             setIsPending(true);
           },
@@ -138,7 +139,7 @@ export const CreateEventForm = () => {
           }}
         />
         <Button type="submit" disabled={isFormDisabled} className="self-start">
-          <LoadingSwap isLoading={isFormDisabled}>Create</LoadingSwap>
+          <LoadingSwap isLoading={isFormDisabled}>{event ? 'Update' : 'Create'}</LoadingSwap>
         </Button>
       </FieldGroup>
     </form>

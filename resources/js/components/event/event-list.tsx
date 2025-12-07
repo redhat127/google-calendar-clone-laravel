@@ -35,7 +35,7 @@ export const EventList = ({ events }: { events: Event[] }) => {
           </CardContent>
           <CardFooter className="flex-col gap-2 sm:flex-row">
             <Button asChild className="w-full sm:w-auto">
-              <Link href={eventRoute.index()}>Edit</Link>
+              <Link href={eventRoute.edit({ eventId: event.id })}>Edit</Link>
             </Button>
             {event.is_active && <CopyEvent eventId={event.id} userId={event.user_id} />}
           </CardFooter>

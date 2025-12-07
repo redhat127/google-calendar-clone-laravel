@@ -48,6 +48,8 @@ Route::middleware('auth')
                 Route::get('/', 'index')->name('index');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/create', 'store')->name('store');
+                Route::get('/{eventId}/edit', 'edit')->name('edit');
+                Route::patch('/{eventId}/edit', 'update')->name('update');
             });
 
         Route::prefix('book')
