@@ -100,4 +100,25 @@ class EventController extends Controller
                     ->limit(preserveWords: true).'" has been updated.',
             ]);
     }
+
+    public function delete(string $eventId)
+    {
+        $event = Event::where([
+            ['id', $eventId],
+            ['user_id', Auth::id()],
+        ])->first();
+
+        if ($event) {
+            $event->delete();
+
+            return redirect()->route('event.index')
+                ->with('flashMessage', [
+                    'type' => 'success',
+                    'text' => 'Event "'.str($event['name'])
+                        ->limit(preserveWords: true).'" has been deleted.',
+                ]);
+        }
+
+        return redirect()->route('event.index');
+    }
 }

@@ -50,6 +50,7 @@ Route::middleware('auth')
                 Route::post('/create', 'store')->name('store');
                 Route::get('/{eventId}/edit', 'edit')->name('edit');
                 Route::patch('/{eventId}/edit', 'update')->name('update');
+                Route::delete('/{eventId}', 'delete')->name('delete');
             });
 
         Route::prefix('book')

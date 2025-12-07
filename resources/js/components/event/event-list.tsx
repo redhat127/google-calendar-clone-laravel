@@ -3,6 +3,7 @@ import eventRoute from '@/routes/event';
 import type { Event } from '@/types';
 import { Link } from '@inertiajs/react';
 import { Clock } from 'lucide-react';
+import { DeleteEventForm } from '../form/event/delete-event-form';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { CopyEvent } from './copy-event';
@@ -13,11 +14,12 @@ export const EventList = ({ events }: { events: Event[] }) => {
       {events.map((event) => (
         <Card key={event.id} className="gap-4 py-4">
           <CardHeader className="gap-1">
-            <CardTitle>
+            <CardTitle className="flex items-start justify-between gap-4">
               <h2 className="leading-5 capitalize">
                 <span>{event.name}</span>
                 {!event.is_active && <span className="text-red-600"> (unavailable)</span>}
               </h2>
+              <DeleteEventForm eventId={event.id} />
             </CardTitle>
             <CardDescription className="flex items-start gap-1">
               <Clock className="mt-0.5 size-4" />
